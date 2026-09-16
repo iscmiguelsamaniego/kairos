@@ -1,0 +1,15 @@
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/KairosApplication.java
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/application/ShowUseCase.java
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/domain/Comment.java
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/domain/Show.java
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/infrastructure/inbound/exception/GlobalExceptionHandler.java
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/infrastructure/inbound/rest/ShowController.java
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/infrastructure/outbound/http/TvMazeClientAdapter.java
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/infrastructure/outbound/http/dto/TvMazeSearchItemDto.java
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/infrastructure/outbound/http/dto/TvMazeShowDto.java
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/infrastructure/outbound/persistence/ShowEntity.java
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/infrastructure/outbound/persistence/ShowMongoRepository.java
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/infrastructure/outbound/persistence/ShowRepositoryAdapter.java
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/ports/in/ShowServicePort.java
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/ports/out/ShowRepositoryPort.java
+/home/angel/Documents/SOFTWARE_DEVELOPMENT/springboot/kairos/src/main/java/com/evaluacion/kairos/ports/out/TvMazeClientPort.java
