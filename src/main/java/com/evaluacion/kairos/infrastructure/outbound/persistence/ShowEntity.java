@@ -16,8 +16,8 @@ public class ShowEntity {
     private String summary;
     private List<String> genres;
 
-    // Índice TTL para invalidar la caché automáticamente después de 24 horas
-    @Indexed(expireAfter = "24h")
+    // Índice TTL para invalidar la caché automáticamente después de 24 horas (86400 segundos)
+    @Indexed(expireAfterSeconds = 86400)
     private Instant createdAt = Instant.now();
 
     // Getters y Setters

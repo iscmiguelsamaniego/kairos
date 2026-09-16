@@ -9,6 +9,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
@@ -23,6 +24,10 @@ public class TvMazeClientAdapter implements TvMazeClientPort {
     // Fallback method triggered when circuit breaker is open or calls fail
     public List<Show> tvmazeFallback(String query, Throwable t) {
         return Collections.emptyList();
+    }
+
+    public Optional<Show> fallbackGetShowById(Long id, Throwable t) {
+        return Optional.empty();
     }
 
     @Override
@@ -48,14 +53,13 @@ public class TvMazeClientAdapter implements TvMazeClientPort {
     }
 
     @Override
+    @CircuitBreaker(name = "tvmazeService", fallbackMethod = "fallbackGetShowById")
     public Optional<Show> getShowById(Long id) {
         String url = "https://api.tvmaze.com/shows/" + id;
         try {
             TvMazeShowDto showDto = restTemplate.getForObject(url, TvMazeShowDto.class);
-            if (showDto == null) return Optional.empty();
-
-            return Optional.of(mapToDomain(showDto));
-        } catch (Exception e) {
+            return Optional.ofNullable(showDto).map(this::mapToDomain);
+        } catch (HttpClientErrorException.NotFound e) {
             return Optional.empty();
         }
     }
