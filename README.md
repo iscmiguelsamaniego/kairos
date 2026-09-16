@@ -33,9 +33,7 @@ Obtiene la información detallada de un show específico a partir de su ID.
 ## Ejecutar Pruebas Unitarias y de Integración:
 ./mvnw clean test
 
-Configuracion / Ejecucion Local
-
-![Configuración Proyecto IntelliJ Kairos](https://github.com/user-attachments/assets/383bcb25-34ff-4b5e-b023-e665b53b6276)
+Ejecucion Local
 
 Opcional Ejecucion en cURL :
 ```bash
