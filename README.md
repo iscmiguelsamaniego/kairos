@@ -30,7 +30,7 @@ curl -X POST "http://localhost:8080/shows/1/comments" \
 -H "Content-Type: application/json" \
 -d '{"comment": "Excelente serie de televisión", "rating": 5}'
 
-Prueba Post Inválido
+Prueba Post Inválido \
 curl -X POST "http://localhost:8080/shows/1/comments" \
 -H "Content-Type: application/json" \
 -d '{"comment": "No me gustó", "rating": 10}'
@@ -58,7 +58,7 @@ Configuracion y Ejecucion Local
 Para ejecutar la aplicación de forma segura sin exponer credenciales en el código fuente, debes configurar la variable de entorno MONGODB_URI.
 
 Desde la Terminal:
-```bash
+
 export MONGODB_URI="mongodb+srv://imash1709_db_user:70LtJYtBUzVjC6q2@cluster0.2lokjlx.mongodb.net/tvmaze_db?retryWrites=true&w=majority&appName=Cluster0"
 ./mvnw spring-boot:run
 
