@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,14 +21,16 @@ import java.util.Optional;
 @Component
 public class TvMazeClientAdapter implements TvMazeClientPort {
 
+    private static final Logger log = LoggerFactory.getLogger(TvMazeClientAdapter.class);
     private final RestTemplate restTemplate = new RestTemplate();
 
-    // Fallback method triggered when circuit breaker is open or calls fail
     public List<Show> tvmazeFallback(String query, Throwable t) {
+        log.warn("Circuito abierto o fallo al buscar shows con la query '{}'. Motivo: {}", query, t.getMessage());
         return Collections.emptyList();
     }
 
     public Optional<Show> fallbackGetShowById(Long id, Throwable t) {
+        log.warn("Circuito abierto o fallo al obtener el show con ID {}. Motivo: {}", id, t.getMessage());
         return Optional.empty();
     }
 
@@ -35,7 +39,6 @@ public class TvMazeClientAdapter implements TvMazeClientPort {
     public List<Show> searchShows(String query) {
         String url = "http://api.tvmaze.com/search/shows?q=" + query;
 
-        // Sin try-catch interno para permitir que Resilience4j detecte los fallos
         ResponseEntity<List<TvMazeSearchItemDto>> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,

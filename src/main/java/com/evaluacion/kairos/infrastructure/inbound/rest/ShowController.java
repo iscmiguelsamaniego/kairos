@@ -1,9 +1,9 @@
 package com.evaluacion.kairos.infrastructure.inbound.rest;
 import com.evaluacion.kairos.domain.Show;
 import com.evaluacion.kairos.ports.in.ShowServicePort;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -22,11 +22,18 @@ public class ShowController {
         return ResponseEntity.ok(shows);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Show> getShowById(@PathVariable("id") Long id) {
+        Show show = showServicePort.getShowById(id);
+        return ResponseEntity.ok(show);
+    }
+
     @PostMapping("/{id}/comments")
     public ResponseEntity<String> addComment(
             @PathVariable("id") Long showId,
-            @jakarta.validation.Valid @RequestBody CommentRequest request) {
+            @Valid @RequestBody CommentRequest request) {
 
-        return ResponseEntity.ok("Comentario agregado exitosamente");
-    }
+        showServicePort.addComment(showId, request.getComment(), request.getRating());
+
+        return ResponseEntity.ok("Comentario agregado exitosamente");    }
 }

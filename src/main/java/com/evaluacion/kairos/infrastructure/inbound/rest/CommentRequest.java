@@ -14,7 +14,6 @@ public class CommentRequest {
     @Max(value = 5, message = "El rating máximo permitido es 5")
     private Integer rating;
 
-    // Getters y Setters
     public String getComment() { return comment; }
     public void setComment(String comment) { this.comment = comment; }
 

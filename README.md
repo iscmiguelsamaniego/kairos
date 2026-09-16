@@ -8,6 +8,7 @@ API middleware en Java y Spring Boot que se conecta a TV Maze, integrando persis
 * **Framework:** Spring Boot 3.3.2 (`spring-boot-starter-parent`).
 * **IDE:** IntelliJ IDEA 2026.1.4.
 * **Base de Datos:** MongoDB Atlas (Persistencia y caché con índices TTL de 24 horas).
+* **Resiliencia:** Resilience4j (Circuit Breaker con patrones de tolerancia a fallos para la API externa).
 * **Calidad y Pruebas:** JUnit 5, Mockito (Pruebas unitarias y de integración).
 
 ## Lógica de Negocio
@@ -38,6 +39,11 @@ curl -X POST "http://localhost:8080/shows/1/comments" \
 ## Análisis de Calidad con SonarQube
 El proyecto cuenta con una suite completa de pruebas unitarias e integración. Para ejecutar el análisis estático local con el servidor de SonarQube en Docker:
 
+## Ejecutar Pruebas Unitarias y de Integración:
+./mvnw test
+
+![Configuración Proyecto IntelliJ Kairos](https://github.com/user-attachments/assets/383bcb25-34ff-4b5e-b023-e665b53b6276)
+
 ```bash
 ./mvnw sonar:sonar \
   -Dsonar.projectKey=kairos \
@@ -53,6 +59,5 @@ Desde la Terminal:
 export MONGODB_URI="mongodb+srv://imash1709_db_user:70LtJYtBUzVjC6q2@cluster0.2lokjlx.mongodb.net/tvmaze_db?retryWrites=true&w=majority&appName=Cluster0"
 ./mvnw spring-boot:run
 
-<img width="778" height="697" alt="Image" src="https://github.com/user-attachments/assets/383bcb25-34ff-4b5e-b023-e665b53b6276" />
 
  
