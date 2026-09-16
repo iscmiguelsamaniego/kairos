@@ -6,6 +6,4 @@ import java.util.List;
 public interface ShowServicePort {
     List<Show> searchShows(String query);
     Show getShowById(Long id);
-
-    void addComment(Long showId, String comment, Integer rating);
 }

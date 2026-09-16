@@ -5,6 +5,7 @@ import com.evaluacion.kairos.infrastructure.outbound.http.dto.TvMazeSearchItemDt
 import com.evaluacion.kairos.infrastructure.outbound.http.dto.TvMazeShowDto;
 import com.evaluacion.kairos.ports.out.TvMazeClientPort;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,15 @@ import java.util.Optional;
 public class TvMazeClientAdapter implements TvMazeClientPort {
 
     private static final Logger log = LoggerFactory.getLogger(TvMazeClientAdapter.class);
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
+    private final String baseUrl;
+
+    public TvMazeClientAdapter(
+            RestTemplate restTemplate,
+            @Value("${tvmaze.api.url:https://api.tvmaze.com}") String baseUrl) {
+        this.restTemplate = restTemplate;
+        this.baseUrl = baseUrl;
+    }
 
     public List<Show> tvmazeFallback(String query, Throwable t) {
         log.warn("Circuito abierto o fallo al buscar shows con la query '{}'. Motivo: {}", query, t.getMessage());
@@ -37,7 +46,7 @@ public class TvMazeClientAdapter implements TvMazeClientPort {
     @Override
     @CircuitBreaker(name = "tvmazeService", fallbackMethod = "tvmazeFallback")
     public List<Show> searchShows(String query) {
-        String url = "http://api.tvmaze.com/search/shows?q=" + query;
+        String url = baseUrl + "/search/shows?q=" + query;
 
         ResponseEntity<List<TvMazeSearchItemDto>> response = restTemplate.exchange(
                 url,
@@ -58,7 +67,7 @@ public class TvMazeClientAdapter implements TvMazeClientPort {
     @Override
     @CircuitBreaker(name = "tvmazeService", fallbackMethod = "fallbackGetShowById")
     public Optional<Show> getShowById(Long id) {
-        String url = "https://api.tvmaze.com/shows/" + id;
+        String url = baseUrl + "/shows/" + id;
         try {
             TvMazeShowDto showDto = restTemplate.getForObject(url, TvMazeShowDto.class);
             return Optional.ofNullable(showDto).map(this::mapToDomain);

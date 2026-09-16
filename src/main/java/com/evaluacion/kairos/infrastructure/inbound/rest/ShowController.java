@@ -1,7 +1,6 @@
 package com.evaluacion.kairos.infrastructure.inbound.rest;
 import com.evaluacion.kairos.domain.Show;
 import com.evaluacion.kairos.ports.in.ShowServicePort;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -18,8 +17,7 @@ public class ShowController {
 
     @GetMapping("/search")
     public ResponseEntity<List<Show>> searchShows(@RequestParam("q") String query) {
-        List<Show> shows = showServicePort.searchShows(query);
-        return ResponseEntity.ok(shows);
+        return ResponseEntity.ok(showServicePort.searchShows(query));
     }
 
     @GetMapping("/{id}")
@@ -28,12 +26,4 @@ public class ShowController {
         return ResponseEntity.ok(show);
     }
 
-    @PostMapping("/{id}/comments")
-    public ResponseEntity<String> addComment(
-            @PathVariable("id") Long showId,
-            @Valid @RequestBody CommentRequest request) {
-
-        showServicePort.addComment(showId, request.getComment(), request.getRating());
-
-        return ResponseEntity.ok("Comentario agregado exitosamente");    }
 }

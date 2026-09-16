@@ -19,11 +19,6 @@
 	</properties>
 
 	<dependencies>
-		<!-- MongoDB Data Starter -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-		</dependency>
 
 		<!-- Bean Validation Starter -->
 		<dependency>
@@ -44,6 +39,14 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Integration testing -->
+		<dependency>
+			<groupId>org.wiremock</groupId>
+			<artifactId>wiremock-standalone</artifactId>
+			<version>3.5.2</version>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- Resilience4j Circuit Breaker and Fallbacks -->
 		<dependency>
 			<groupId>io.github.resilience4j</groupId>
@@ -55,6 +58,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
+
 	</dependencies>
 
 	<build>
