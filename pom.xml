@@ -44,13 +44,13 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Resilience4j para Circuit Breaker y Fallbacks -->
+		<!-- Resilience4j Circuit Breaker and Fallbacks -->
 		<dependency>
 			<groupId>io.github.resilience4j</groupId>
 			<artifactId>resilience4j-spring-boot3</artifactId>
 			<version>2.1.0</version>
 		</dependency>
-		<!-- Soporte AOP necesario para las anotaciones de Resilience4j -->
+		<!-- AOP support required for Resilience4j annotations -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>

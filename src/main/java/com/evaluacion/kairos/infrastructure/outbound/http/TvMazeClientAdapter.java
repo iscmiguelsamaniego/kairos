@@ -4,6 +4,7 @@ import com.evaluacion.kairos.domain.Show;
 import com.evaluacion.kairos.infrastructure.outbound.http.dto.TvMazeSearchItemDto;
 import com.evaluacion.kairos.infrastructure.outbound.http.dto.TvMazeShowDto;
 import com.evaluacion.kairos.ports.out.TvMazeClientPort;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -19,28 +20,31 @@ public class TvMazeClientAdapter implements TvMazeClientPort {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+    // Fallback method triggered when circuit breaker is open or calls fail
+    public List<Show> tvmazeFallback(String query, Throwable t) {
+        return Collections.emptyList();
+    }
+
     @Override
+    @CircuitBreaker(name = "tvmazeService", fallbackMethod = "tvmazeFallback")
     public List<Show> searchShows(String query) {
         String url = "http://api.tvmaze.com/search/shows?q=" + query;
-        try {
-            ResponseEntity<List<TvMazeSearchItemDto>> response = restTemplate.exchange(
-                    url,
-                    HttpMethod.GET,
-                    null,
-                    new ParameterizedTypeReference<>() {}
-            );
 
-            List<TvMazeSearchItemDto> body = response.getBody();
-            if (body == null) return Collections.emptyList();
+        // Sin try-catch interno para permitir que Resilience4j detecte los fallos
+        ResponseEntity<List<TvMazeSearchItemDto>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<>() {}
+        );
 
-            return body.stream()
-                    .filter(item -> item.show() != null)
-                    .map(item -> mapToDomain(item.show()))
-                    .toList();
+        List<TvMazeSearchItemDto> body = response.getBody();
+        if (body == null) return Collections.emptyList();
 
-        } catch (Exception e) {
-            return Collections.emptyList();
-        }
+        return body.stream()
+                .filter(item -> item.show() != null)
+                .map(item -> mapToDomain(item.show()))
+                .toList();
     }
 
     @Override

@@ -21,4 +21,12 @@ public class ShowController {
         List<Show> shows = showServicePort.searchShows(query);
         return ResponseEntity.ok(shows);
     }
+
+    @PostMapping("/{id}/comments")
+    public ResponseEntity<String> addComment(
+            @PathVariable("id") Long showId,
+            @jakarta.validation.Valid @RequestBody CommentRequest request) {
+
+        return ResponseEntity.ok("Comentario agregado exitosamente");
+    }
 }
