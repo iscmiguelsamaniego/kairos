@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.Instant;
 
 @Document(collection = "comments")
-class CommentEntity {
+public class CommentEntity {
     @Id
     private String id;
     private Long showId;
