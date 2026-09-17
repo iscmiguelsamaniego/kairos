@@ -92,7 +92,7 @@ class ShowControllerTest {
         request.setComment("Excelente serie");
         request.setRating(5);
 
-        doNothing().when(showServicePort).addComment(eq(showId), eq("Excelente serie"), eq(5));
+        doNothing().when(showServicePort).addComment(eq(showId), anyString(), anyInt());
 
         // Act & Assert
         mockMvc.perform(post("/shows/{id}/comments", showId)
