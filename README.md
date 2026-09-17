@@ -15,14 +15,25 @@ API middleware en Java y Spring Boot que se conecta a TV Maze, integrando persis
 
 * **Diseño Hexagonal:** Separación estricta en capas (`domain`, `ports.in`, `ports.out`, `application`, `infrastructure`).
 
-* **Endpoint A (`/search`):** Consulta a TV Maze y retorno estructurado de shows (`id`, `name`, `channel`, `summary`, `genres`) enriquecidos con comentarios de MongoDB.
+* A - Validación del Endpoint Search (/shows/search?q=...)
 
-curl -X GET "http://localhost:8080/shows/search?q=batman" -H "Accept: application/json"
+curl -X GET "http://localhost:8080/shows/search?q=batman" \
+-H "Accept: application/json"
 
 
-* **Endpoint B (`/shows/{id}`):** Validación previa de caché en MongoDB (patrón *cache-aside*); si no existe, consume la API externa, persiste y responde junto con sus comentarios.
+* B - Validación del Endpoint Show por ID (/shows/{id})
 
-curl -X GET "http://localhost:8080/shows/1" -H "Accept: application/json" | jq
+curl -X GET "http://localhost:8080/shows/1" \
+-H "Accept: application/json"
+
+* Extra: Validación de Registro de Comentarios (POST)
+
+curl -X POST "http://localhost:8080/shows/1/comments" \
+-H "Content-Type: application/json" \
+-d '{
+"comment": "Muy buena trama",
+"rating": 4
+}'
 
 * **Comentarios (`/comments`):** Registro de opiniones y calificaciones con validación estricta de rango (0 a 5) mediante Bean Validation.
 
@@ -45,7 +56,19 @@ El proyecto cuenta con una suite completa de pruebas unitarias e integración. P
 
 ## Opcional : Configurar en IntelliJ las credenciales de MongoDB
 
-![Configuración Proyecto IntelliJ Kairos](https://github.com/user-attachments/assets/383bcb25-34ff-4b5e-b023-e665b53b6276)
+1.- Editar Configuration
+
+2.- Agregar Environment Variables
+
+Name = MONGODB_URI
+
+Uri = mongodb+srv://imash1709_db_user:70LtJYtBUzVjC6q2@cluster0.2lokjlx.mongodb.net/tvmaze_db?retryWrites=true&w=majority&appName=Cluster0
+
+![Configuración Proyecto IntelliJ Kairos](https://github.com/user-attachments/assets/8e9ba124-07e2-4ea1-8ba3-91c42044aff0)
+
+
+## Análisis de Calidad con SonarQube
+El proyecto cuenta con una suite completa de pruebas unitarias e integración. Para ejecutar el análisis estático local con el servidor de SonarQube en Docker:
 
 ```bash
 ./mvnw sonar:sonar \
@@ -57,10 +80,7 @@ Configuracion y Ejecucion Local
 
 Para ejecutar la aplicación de forma segura sin exponer credenciales en el código fuente, debes configurar la variable de entorno MONGODB_URI.
 
-Desde la Terminal:
+Desde la Terminal :
 
 export MONGODB_URI="mongodb+srv://imash1709_db_user:70LtJYtBUzVjC6q2@cluster0.2lokjlx.mongodb.net/tvmaze_db?retryWrites=true&w=majority&appName=Cluster0"
 ./mvnw spring-boot:run
-
-
- 
