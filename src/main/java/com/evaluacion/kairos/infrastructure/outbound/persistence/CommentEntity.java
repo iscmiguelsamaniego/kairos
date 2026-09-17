@@ -30,7 +30,5 @@ public class CommentEntity {
     public void setComment(String comment) { this.comment = comment; }
     public Integer getRating() { return rating; }
     public void setRating(Integer rating) { this.rating = rating; }
-    public Instant getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
 
 }

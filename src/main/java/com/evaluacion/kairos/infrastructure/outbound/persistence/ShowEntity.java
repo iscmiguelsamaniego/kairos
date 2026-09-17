@@ -30,6 +30,4 @@ public class ShowEntity {
     public void setSummary(String summary) { this.summary = summary; }
     public List<String> getGenres() { return genres; }
     public void setGenres(List<String> genres) { this.genres = genres; }
-    public Instant getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
 }

@@ -1,6 +1,5 @@
 package com.evaluacion.kairos.application;
 
-import com.evaluacion.kairos.domain.Comment;
 import com.evaluacion.kairos.domain.Show;
 import com.evaluacion.kairos.ports.in.ShowServicePort;
 import com.evaluacion.kairos.ports.out.CommentRepositoryPort;
@@ -27,46 +26,24 @@ public class ShowUseCase implements ShowServicePort {
 
     @Override
     public List<Show> searchShows(String query) {
+        return tvMazeClientPort.searchShows(query);
 
-        List<Show> externalShows = tvMazeClientPort.searchShows(query);
-
-        return externalShows.stream().map(show -> {
-            List<Comment> comments = commentRepositoryPort.findCommentsByShowId(show.id());
-            return new Show(
-                    show.id(),
-                    show.name(),
-                    show.channel(),
-                    show.summary(),
-                    show.genres(),
-                    comments
-            );
-        }).toList();
     }
 
     @Override
     public Show getShowById(Long id) {
-        Show show = showRepositoryPort.findById(id)
+        // Valida el caché en MongoDB; si no está, consume la API y lo guarda antes de retornar
+        return showRepositoryPort.findById(id)
                 .orElseGet(() -> {
                     Show externalShow = tvMazeClientPort.getShowById(id)
-                            .orElseThrow(() -> new RuntimeException("Show not found"));
-
+                            .orElseThrow(() -> new RuntimeException("Show not found with ID: " + id));
                     return showRepositoryPort.save(externalShow);
                 });
-
-        List<Comment> comments = commentRepositoryPort.findCommentsByShowId(id);
-
-        return new Show(
-                show.id(),
-                show.name(),
-                show.channel(),
-                show.summary(),
-                show.genres(),
-                comments
-        );
     }
 
     @Override
     public void addComment(Long showId, String comment, Integer rating) {
+        // Guarda la calificación (0-5) y comentario ligado al ID del show
         getShowById(showId);
         commentRepositoryPort.saveComment(showId, comment, rating);
     }

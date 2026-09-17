@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Salida estándar por consola -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--
+      Silencia las advertencias y excepciones de reconexión del monitor de MongoDB
+      al apagar el contenedor.
+      Motivo: Son falsos positivos de ruido (teardown noise) causados cuando Testcontainers
+      destruye el socket de Docker exactamente al mismo microsegundo en que el driver
+      intenta enviar su último latido (heartbeat) durante el cierre de la JVM. No afectan
+      la integridad ni el resultado de las pruebas de integración.
+    -->
+    <logger name="org.mongodb.driver.cluster" level="OFF" />
+    <logger name="org.mongodb.driver.connection" level="OFF" />
+
+    <!-- Configuración raíz para el resto de logs de tests -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
