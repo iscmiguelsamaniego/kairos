@@ -12,6 +12,10 @@ API middleware en Java y Spring Boot que se conecta a TV Maze para realizar la b
 
 ## Arquitectura y Lógica de Negocio
 
+**Documentacion en Swagger**  
+
+http://localhost:8080/swagger-ui/index.html
+
 * **Diseño Hexagonal:** Separación estricta en capas (`domain`, `ports.in`, `ports.out`, `application`, `infrastructure`).
 * **Resiliencia:** Manejo de degradación de servicio mediante `@CircuitBreaker` para proteger la comunicación con la API externa de TV Maze.
 * **Control Global de Excepciones:** `@RestControllerAdvice` para interceptar errores no controlados y estandarizar la estructura del `ErrorResponse`.
