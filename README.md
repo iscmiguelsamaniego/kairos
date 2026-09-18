@@ -13,6 +13,10 @@ API middleware en Java y Spring Boot que se conecta a TV Maze, integrando persis
 
 ## Lógica de Negocio
 
+* **Documentacion en Swagger**
+
+http://localhost:8080/swagger-ui/index.html
+
 * **Diseño Hexagonal:** Separación estricta en capas (`domain`, `ports.in`, `ports.out`, `application`, `infrastructure`).
 
 * A - Validación del Endpoint Search (/shows/search?q=...)
@@ -62,7 +66,7 @@ El proyecto cuenta con una suite completa de pruebas unitarias e integración. P
 
 Name = MONGODB_URI
 
-Uri = mongodb+srv://imash1709_db_user:70LtJYtBUzVjC6q2@cluster0.2lokjlx.mongodb.net/tvmaze_db?retryWrites=true&w=majority&appName=Cluster0
+Value = mongodb+srv://imash1709_db_user:70LtJYtBUzVjC6q2@cluster0.2lokjlx.mongodb.net/tvmaze_db?retryWrites=true&w=majority&appName=Cluster0
 
 ![Configuración Proyecto IntelliJ Kairos](https://github.com/user-attachments/assets/8e9ba124-07e2-4ea1-8ba3-91c42044aff0)
 
