@@ -54,7 +54,7 @@ curl -X GET "http://localhost:8080/shows/99999999" \
      -H "Accept: application/json"
 
 # Analisis con Sonar Qube
-./mvnw sonar:sonar \
+./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.11.0.3922:sonar \
   -Dsonar.projectKey=kairos \
   -Dsonar.host.url=http://localhost:9000 \
   -Dsonar.token=TU_TOKEN```
