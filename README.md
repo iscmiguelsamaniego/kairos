@@ -75,7 +75,7 @@ Value = mongodb+srv://imash1709_db_user:70LtJYtBUzVjC6q2@cluster0.2lokjlx.mongod
 El proyecto cuenta con una suite completa de pruebas unitarias e integración. Para ejecutar el análisis estático local con el servidor de SonarQube en Docker:
 
 ```bash
-./mvnw sonar:sonar \
+./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.11.0.3922:sonar \
   -Dsonar.projectKey=kairos \
   -Dsonar.host.url=http://localhost:9000 \
   -Dsonar.token=TU_TOKEN
